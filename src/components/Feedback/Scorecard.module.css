@@ -1,0 +1,94 @@
+/**
+ * Scorecard CSS Module
+ */
+
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.scoreWrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.score {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.scoreTotal {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Color Grades */
+.good {
+    color: #06D6A0;
+}
+
+/* Green */
+.fair {
+    color: #FFD166;
+}
+
+/* Yellow */
+.poor {
+    color: #FF4D4D;
+}
+
+/* Red */
+
+.feedbackList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.feedbackItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #ddd;
+    line-height: 1.4;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.feedbackIcon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.perfect {
+    color: #06D6A0;
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
+}

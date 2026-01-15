@@ -1,0 +1,59 @@
+/**
+ * AlertBanner CSS Module
+ */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 4px solid;
+    animation: slideDown 0.3s ease-out;
+}
+
+.warning {
+    background: rgba(255, 209, 102, 0.1);
+    border-left-color: #FFD166;
+    color: #FFD166;
+}
+
+.block {
+    background: rgba(255, 77, 77, 0.1);
+    border-left-color: #FF4D4D;
+    color: #FF4D4D;
+}
+
+.title {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fix {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-style: italic;
+    margin-left: 1rem;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

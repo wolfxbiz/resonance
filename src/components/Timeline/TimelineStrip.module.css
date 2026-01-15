@@ -1,0 +1,128 @@
+/**
+ * TimelineStrip CSS Module
+ * 
+ * Styles for the timeline visualization component.
+ * Uses CSS Grid with fr units for proportional segment widths.
+ */
+
+.container {
+  width: 100%;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+.strip {
+  display: grid;
+  height: 100%;
+  width: 100%;
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  overflow: hidden;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.segment:hover {
+  filter: brightness(1.1);
+  z-index: 1;
+}
+
+.segment:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.segment:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.segmentName {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.timeRange {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* Segment Type Colors */
+.typePeak,
+.typeDrop {
+  background: linear-gradient(135deg, #FF4D4D 0%, #E63946 100%);
+}
+
+.typeBuild,
+.typeHook {
+  background: linear-gradient(135deg, #FFD166 0%, #F4A261 100%);
+}
+
+.typeSustain {
+  background: linear-gradient(135deg, #06D6A0 0%, #059669 100%);
+}
+
+.typeResolve,
+.typeCalm,
+.typeBreak {
+  background: linear-gradient(135deg, #118AB2 0%, #0D6A94 100%);
+}
+
+/* Default fallback */
+.typeDefault {
+  background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
+}
+
+/* Small segment handling */
+.segmentSmall .segmentName {
+  font-size: 9px;
+}
+
+.segmentSmall .timeRange {
+  display: none;
+}
+
+/* Tooltip for small segments */
+.segment::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.segment:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
