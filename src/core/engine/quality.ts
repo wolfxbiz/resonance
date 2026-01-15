@@ -23,13 +23,11 @@ export interface QualityReport {
  * 
  * @param timeline - The calculated timeline segments
  * @param platform - The target platform
- * @param structureId - ID of structure used (for context)
  * @returns QualityReport with score and feedback
  */
 export const calculateQuality = (
     timeline: CalculatedSegment[],
     platform: Platform,
-    structureId: string
 ): QualityReport => {
     let score = 100;
     const feedback: string[] = [];
