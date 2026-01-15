@@ -47,8 +47,8 @@ function ResonanceDashboard() {
 
   // Calculate Quality Score
   const qualityReport = useMemo(() => {
-    return calculateQuality(activeTimeline, platform, structure.id);
-  }, [activeTimeline, platform, structure.id]);
+    return calculateQuality(activeTimeline, platform);
+  }, [activeTimeline, platform,]);
 
   return (
     <div className="dashboard-layout">
