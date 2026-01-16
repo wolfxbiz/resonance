@@ -110,9 +110,6 @@ function ResonanceDashboard() {
             letter-spacing: 1px;
             margin-bottom: 20px;
           }
-          .selection-column {
-            min-width: 0;
-          }
         `}
       </style>
       <header className="dashboard-header" style={{ borderBottom: '2px solid #118AB2', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
