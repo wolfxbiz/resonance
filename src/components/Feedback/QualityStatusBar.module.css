@@ -1,0 +1,121 @@
+.statusBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #111;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scoreSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #666;
+    letter-spacing: 1px;
+}
+
+.score {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.detailsLink {
+    font-size: 0.75rem;
+    color: #118AB2;
+    text-decoration: underline;
+}
+
+.productionButton {
+    background: #06D6A0;
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.productionButton:disabled {
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.pulse {
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(6, 214, 160, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(6, 214, 160, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(6, 214, 160, 0);
+    }
+}
+
+.popover {
+    position: absolute;
+    bottom: 100%;
+    left: 24px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 16px;
+    width: 300px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.popover h4 {
+    margin: 0 0 12px 0;
+    font-size: 0.9rem;
+    color: #eee;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.feedbackList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feedbackItem {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    display: flex;
+    gap: 8px;
+}
+
+.bullet {
+    color: #118AB2;
+}

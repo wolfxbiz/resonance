@@ -14,6 +14,7 @@ export * from './Notifications/NotificationList';
 
 export * from './Notifications/AlertBanner';
 export * from './Feedback/Scorecard';
+export * from './Feedback/QualityStatusBar';
 export * from '../context/ResonanceContext';
 
 

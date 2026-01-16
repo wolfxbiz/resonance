@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
 import './App.css';
 import {
-  TimelineStrip,
   DurationInput,
   StructureSelector,
-  DownloadButton,
   PlatformSelector,
   AlertBanner,
-  Scorecard,
+  QualityStatusBar,
   DialogueToggle,
   ResonanceProvider,
   useResonance
@@ -16,9 +14,9 @@ import { calculateTimeline } from './core/engine/calculator';
 import { validateConfiguration } from './core/engine/rules';
 import { applyDialogueConstraints } from './core/engine/modifiers';
 import { calculateQuality } from './core/engine/quality';
-
-
-
+import { ProjectProvider, useProject } from './core/store/ProjectContext';
+import { ProductionDashboard } from './components/Phase2/ProductionDashboard';
+import type { PlatformContext, Phase1Data } from './core/types/phase2';
 
 /**
  * Main Content Component
@@ -26,6 +24,7 @@ import { calculateQuality } from './core/engine/quality';
  */
 function ResonanceDashboard() {
   const { duration, structure, platform, hasDialogue } = useResonance();
+  const { state: projectState, dispatch: projectDispatch } = useProject();
 
   // Apply modifiers if needed
   const modifiedStructure = useMemo(() => {
@@ -47,72 +46,110 @@ function ResonanceDashboard() {
 
   // Calculate Quality Score
   const qualityReport = useMemo(() => {
-    return calculateQuality(activeTimeline, platform, structure.id);
-  }, [activeTimeline, platform, structure.id]);
+    return calculateQuality(activeTimeline, platform);
+  }, [activeTimeline, platform]);
+
+  // Handle Start Production
+  const handleStartProduction = () => {
+    // Construct Phase 1 Data
+    const phase1Data: Phase1Data = {
+      structure: modifiedStructure,
+      timeline: activeTimeline
+    };
+
+    // Construct Platform Context
+    // Note: Safe zones are hardcoded for now, ideally should come from a config based on platform
+    const platformContext: PlatformContext = {
+      platformId: platform,
+      maxDuration: duration,
+      safeZones: { top: 0, bottom: 0, left: 0, right: 0 } // Placeholder
+    };
+
+    projectDispatch({
+      type: 'LOCK_BLUEPRINT',
+      payload: {
+        phase1Data,
+        platformContext
+      }
+    });
+  };
+
+  // Conditional Rendering: Phase 2 vs Phase 1
+  if (projectState.layers.blueprint) {
+    return <ProductionDashboard />;
+  }
 
   return (
-    <div className="dashboard-layout">
-      <header className="dashboard-header">
-        <h1>Resonance Engine</h1>
-        <p>Emotional Logic Matrix</p>
+    <div className="dashboard-layout phase1-mode">
+      <style>
+        {`
+          .dashboard-layout {
+            padding-bottom: 80px;
+            min-height: 100vh;
+            background: #121212;
+          }
+          .dashboard-main {
+            display: grid;
+            gap: 24px;
+            padding: 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+            grid-template-columns: 1fr;
+          }
+          @media (min-width: 1024px) {
+            .dashboard-main {
+              grid-template-columns: 300px 1fr;
+              padding: 32px;
+              gap: 40px;
+            }
+          }
+          .config-column h4 {
+            color: #666;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+          }
+          .selection-column {
+            min-width: 0;
+          }
+        `}
+      </style>
+      <header className="dashboard-header" style={{ borderBottom: '2px solid #118AB2', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1 style={{ fontSize: '1.2rem', margin: 0 }}>Phase 1: Blueprint</h1>
+        <div className="meta-info" style={{ fontSize: '0.8rem', color: '#666' }}>
+          <span>Emotional Logic Matrix</span>
+        </div>
       </header>
 
       <main className="dashboard-main">
-        {/* Top Controls Area */}
-        <section className="controls-section">
-          <div className="left-column">
-            <PlatformSelector />
-            <StructureSelector />
+        {/* Column 1: Config */}
+        <aside className="config-column">
+          <h4>Configuration</h4>
+
+          <PlatformSelector />
+          <DurationInput />
+          <DialogueToggle />
+
+          <div className="alert-area" style={{ marginTop: '30px' }}>
+            <AlertBanner conflicts={conflicts} />
           </div>
+        </aside>
 
-          <div className="right-column">
-            <DurationInput />
-            <DialogueToggle />
-            <DownloadButton disabled={hasBlockingError} qualityReport={qualityReport} />
-            <Scorecard report={qualityReport} />
-
-
-            <div className="info-card">
-              <div className="info-label">Active Structure</div>
-              <div className="info-value">{structure.name}</div>
-              <div className="info-desc">{structure.description}</div>
-              <div className="info-tags">
-                {structure.pacing.silenceRequired && <span className="tag fade">Silence Required</span>}
-                <span className="tag">Peak @ {structure.pacing.peakPositionMax * 100}%</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline Visualization */}
-        <section className="visualization-section">
-          <h2>Timeline Visualization</h2>
-          <AlertBanner conflicts={conflicts} />
-          <TimelineStrip segments={activeTimeline} />
-
-          <div className="timeline-stats">
-            {activeTimeline.map((seg, i) => (
-              <div key={i} className="stat-row">
-                <span className="stat-type" style={{ color: getSegmentColor(seg.type) }}>{seg.type}</span>
-                <span className="stat-time">{seg.startTime}s - {seg.endTime}s</span>
-                <span className="stat-dur">{seg.duration}s</span>
-              </div>
-            ))}
-          </div>
+        {/* Column 2: Selection */}
+        <section className="selection-column">
+          <StructureSelector activeTimeline={activeTimeline} />
         </section>
       </main>
+
+      {/* Fixed Bottom Status Bar */}
+      <QualityStatusBar
+        report={qualityReport}
+        onStartProduction={handleStartProduction}
+        disabled={hasBlockingError}
+      />
     </div>
   );
-}
-
-// Helper for log output colors matching the CSS module
-function getSegmentColor(type: string) {
-  switch (type) {
-    case 'PEAK': case 'DROP': return '#FF4D4D';
-    case 'BUILD': case 'HOOK': return '#FFD166';
-    case 'SUSTAIN': return '#06D6A0';
-    default: return '#118AB2';
-  }
 }
 
 /**
@@ -121,9 +158,11 @@ function getSegmentColor(type: string) {
  */
 function App() {
   return (
-    <ResonanceProvider>
-      <ResonanceDashboard />
-    </ResonanceProvider>
+    <ProjectProvider>
+      <ResonanceProvider>
+        <ResonanceDashboard />
+      </ResonanceProvider>
+    </ProjectProvider>
   );
 }
 

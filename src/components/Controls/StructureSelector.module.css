@@ -1,85 +1,137 @@
-/**
- * StructureSelector CSS Module
- */
-
 .container {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #ccc;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #666;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin-bottom: 0.5rem;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-}
-
-.card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.accordion {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    position: relative;
+    gap: 8px;
+    width: 100%;
+}
+
+.row {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.row:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.rowActive {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(6, 214, 160, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.rowHeader {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rowTitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon {
+    font-size: 1rem;
+    color: #06D6A0;
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.hint {
+    font-size: 0.7rem;
+    color: #444;
+    font-weight: 700;
+}
+
+.rowContent {
+    padding: 0 20px 20px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 16px;
+    width: 100%;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
-.card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.cardActive {
-    background: rgba(17, 138, 178, 0.15);
-    border-color: #118AB2;
-    box-shadow: 0 0 0 1px #118AB2, 0 8px 20px rgba(17, 138, 178, 0.2);
-}
-
-.cardActive:hover {
-    background: rgba(17, 138, 178, 0.2);
-}
-
-.cardName {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.25px;
-}
-
-.cardDescription {
+.description {
     font-size: 0.85rem;
     color: #aaa;
-    line-height: 1.4;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    white-space: normal;
+    word-break: break-word;
+    word-break: break-all;
 }
 
-/* Add a subtle accent line at the bottom */
-.card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.vizWrapper {
+    margin-bottom: 20px;
     width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    opacity: 0.5;
+    overflow: hidden;
 }
 
-.cardActive::after {
-    background: #118AB2;
-    opacity: 1;
-    height: 4px;
+.vizLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #555;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.details {
+    display: flex;
+    gap: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detailLabel {
+    font-size: 0.65rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detailValue {
+    font-size: 0.85rem;
+    color: #eee;
+    font-weight: 600;
 }
